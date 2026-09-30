@@ -126,16 +126,16 @@ def DDTM_Generate(pr: float, Address: str) -> None:
                 Y = X.copy()
                 for j in range(0, 15):
                     binVec = Bsc.Int2Nib(np.uint8(j))
-                    X[0][0] = binVec[0]
-                    X[0][1] = binVec[1]
-                    X[1][0] = binVec[2]
-                    X[1][1] = binVec[3]
+                    X[2][0] = binVec[0]
+                    X[2][1] = binVec[1]
+                    X[3][0] = binVec[2]
+                    X[3][1] = binVec[3]
                     for l in range(j + 1, 16):
                         binVec = Bsc.Int2Nib(np.uint8(l))
-                        Y[0][0] = binVec[0]
-                        Y[0][1] = binVec[1]
-                        Y[1][0] = binVec[2]
-                        Y[1][1] = binVec[3]
+                        Y[2][0] = binVec[0]
+                        Y[2][1] = binVec[1]
+                        Y[3][0] = binVec[2]
+                        Y[3][1] = binVec[3]
                         ptxList.append(X.copy())
                         ptxList.append(Y.copy())
                 flag = True

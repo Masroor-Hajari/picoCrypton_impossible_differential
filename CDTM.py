@@ -93,7 +93,7 @@ def ReadDoc(Address: str) -> list:
         print("Error: Invalid input.", e)
 
 ###################################################################################################
-####                                  Random Oracle Generator                                  ####
+####                                       Random Oracle                                       ####
 ###################################################################################################
 def RndOracle(N: int) -> list:
     try:
@@ -152,7 +152,6 @@ def CDTM_Generate(Address: str) -> bool:
         [0, 0, 0, 0]
         ], dtype = np.uint8)
     b = Bsc.RandInt(0, 1, True)
-    b = 1
     flag = True
     if b == 0:
         for i in range (0, 4):
