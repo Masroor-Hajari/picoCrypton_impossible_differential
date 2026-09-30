@@ -2,6 +2,8 @@ from Basic import AddressModifiy
 from time import sleep
 import DDTM
 import CDTM
+import ADTM
+import ODTM
 
 """
 Instruction:
@@ -74,7 +76,7 @@ Behavior summary:
 - main(Address) returns None; primary outputs are created files and console messages.
 - The final verification result is printed by CDTM.CDTM_Verify; the boolean values used are produced by
   CDTM.CDTM_Write and DDTM.DDTM_Decision and are not returned by main.
-- For picoCrypton key recovery the ADTM.ADTM_Write insert the chosen plaintexts and also sieves the possible keys, and ODTM encrypts the required plaintexts.
+- For picoCrypton key recovery the ADTM.ADTM_Write insert the chosen plaintexts and also sieves the possible keys, and ODTM encrypts the required plaintexts using the master key entered in Masterkey.txt file.
 """
 
 ###################################################################################################
@@ -101,7 +103,15 @@ def main(Address: str, scenario: int) -> None:
                 print("Verifying the answer by CDTM.")
                 CDTM.CDTM_Verify(b, bHat)
             else:
-                print("Please wait. This part shall be completed.")
+                hashList1 = ADTM.PreComp1()
+                ADTM.ADTM_Generate(Address)
+                ctxList = ODTM.ODTM_Generate(Address)
+                IndexList = ADTM.ADTM_PartEnc1(Address, hashList1, ctxList)
+                hashList2 = ADTM.PreComp2()
+                IndexList2 = ADTM.ADTM_PartEnc2(IndexList, hashList1, hashList2)
+                keyList = ADTM.ADTM_PartDec(ctxList, IndexList2)
+                ADTM.ADTM_Search(ctxList[0], ctxList[1], keyList)
+                print("Impossible-differential cryptanalysis has been finalized.")
 
     except TypeError as e:
         print("Error: Game has been terminated because of an invalid input.", e)
